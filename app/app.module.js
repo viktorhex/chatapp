@@ -5,7 +5,5 @@ angular.module('myApp', [
   'ngAnimate',
   'ngMaterial',
   'ngRoute',
-  'core',
-  'projectItemList',
-  'projectItemDetails'
+  'chat',
 ])

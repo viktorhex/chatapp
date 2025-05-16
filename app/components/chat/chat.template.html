@@ -1,14 +1,10 @@
 <div class="chat-container">
-  <div class="chat-messages">
+  <div class="chat-messages" scroll-on-new-message="$ctrl.messages">
     <div ng-repeat="message in $ctrl.messages" class="chat-message">
       <span>{{message.text}}</span>
       <small>{{message.timestamp}}</small>
     </div>
   </div>
-  <input 
-    type="text" 
-    class="chat-input" 
-    placeholder="Type a message..." 
-    ng-model="$ctrl.newMessage" 
+  <input type="text" class="chat-input" placeholder="Type a message..." ng-model="$ctrl.newMessage"
     ng-keypress="$ctrl.onKeyPress($event)">
 </div>

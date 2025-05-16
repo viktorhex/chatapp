@@ -8,7 +8,7 @@ angular
       function ChatController($location) {
         this.messages = [];
 
-        this.addMessage = function(messageText) {
+        this.addMessage = function (messageText) {
           if (messageText && messageText.trim()) {
             this.messages.push({
               text: messageText,
@@ -18,7 +18,7 @@ angular
           }
         };
 
-        this.onKeyPress = function(event) {
+        this.onKeyPress = function (event) {
           if (event.keyCode === 13) {
             this.addMessage(this.newMessage);
           }

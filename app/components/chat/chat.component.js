@@ -10,7 +10,7 @@ angular
 
         this.onKeyPress = function (event) {
           if (event.keyCode === 13) {
-            ChatService.addMessage(this.newMessage);
+            ChatService.addMessage(this.newMessage, 'me');
             this.newMessage = '';
           }
         };

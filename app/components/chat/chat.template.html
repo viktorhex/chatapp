@@ -1,8 +1,9 @@
 <div class="chat-container">
   <div class="chat-messages" scroll-on-new-message="$ctrl.messages">
-    <div ng-repeat="message in $ctrl.messages" class="chat-message">
+    <div ng-repeat="message in $ctrl.messages | orderBy:'timestamp'" class="chat-message"
+      ng-class="{'my-message': message.sender === 'me', 'other-message': message.sender !== 'me'}">
       <span>{{message.text}}</span>
-      <small>{{message.timestamp}}</small>
+      <small>{{message.sender}} - {{message.timestamp | date:'h:mm a'}}</small>
     </div>
   </div>
   <input type="text" class="chat-input" placeholder="Type a message..." ng-model="$ctrl.newMessage"

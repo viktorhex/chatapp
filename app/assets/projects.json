@@ -1,0 +1,32 @@
+[
+  {
+    "id": "0",
+    "name": "Project Portfolio",
+    "description": "This is an AngularJS demo, used to present my other projects/demos.",
+    "tools": [
+      "AngularJS",
+      "Bootstrap",
+      "MaterialJS"
+    ],
+    "image": "assets/images/project-portfolio.png"
+  },
+  {
+    "id": "1",
+    "name": "ActiveMQ Demo",
+    "description": "This is a demo of ActiveMQ and Java",
+    "tools": [
+      "Java Messaging Service",
+      "ActiveMQ"
+    ]
+  },
+  {
+    "id": "2",
+    "name": "Project Z",
+    "description": "This is description Z",
+    "tools": [
+      "A",
+      "B",
+      "C"
+    ]
+  }
+]

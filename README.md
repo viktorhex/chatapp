@@ -1,1 +1,1 @@
-![alt text](https://raw.githubusercontent.com/viktorhex/chatapp/refs/heads/main/chat-architecture.png)
+![alt text](https://raw.githubusercontent.com/viktorhex/chatapp/refs/heads/main/chat-arch.png)

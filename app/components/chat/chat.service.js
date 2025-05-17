@@ -2,38 +2,50 @@
 
 angular
     .module('chat')
-    .service('ChatService', ['$interval', function ($interval) {
+    .service('ChatService', ['$timeout', function ($timeout) {
         var messages = [];
+        var stompClient = null;
 
         this.getMessages = function () {
             return messages;
         };
 
-        this.addMessage = function (messageText, sender) {
+        this.addMessage = function(messageText, sender) {
             if (messageText && messageText.trim()) {
-                messages.push({
+                var senderId = sessionStorage.getItem('senderId');
+                if (!senderId) {
+                    senderId = 'user-' + Math.random().toString(36).substr(2, 9);
+                    sessionStorage.setItem('senderId', senderId);
+                }
+                stompClient.send('/app/chat', {}, JSON.stringify({
                     text: messageText,
                     timestamp: new Date().toISOString(),
-                    sender: sender || 'me'
-                });
+                    sender: senderId
+                }));
             }
         };
 
-        this.receiveMessage = function (messageText, sender) {
-            if (messageText && messageText.trim() && sender !== 'me') {
-                messages.push({
-                    text: messageText,
-                    timestamp: new Date().toISOString(),
-                    sender: sender
+        this.connect = function () {
+            var socket = new SockJS('http://localhost:8080/websocket');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function (frame) {
+                stompClient.subscribe('/topic/chat', function (message) {
+                    var msg = JSON.parse(message.body);
+                    var senderId = sessionStorage.getItem('senderId');
+                    var isCurrentUser = msg.sender === senderId;
+                    $timeout(function () {
+                        messages.push({
+                            text: msg.text,
+                            timestamp: msg.timestamp,
+                            sender: msg.sender,
+                            isCurrentUser: isCurrentUser
+                        });
+                    }, 0);
                 });
-            }
+            }, function (error) {
+                console.error('Connection error:', error);
+            });
         };
 
-        var otherUsers = ['Alice', 'Bob'];
-        $interval(function () {
-            var sender = otherUsers[Math.floor(Math.random() * otherUsers.length)];
-            var texts = ['Hey, how’s it going?', 'Just saw your message!', 'What’s up?'];
-            var text = texts[Math.floor(Math.random() * texts.length)];
-            this.receiveMessage(text, sender);
-        }.bind(this), 5000);
+        this.connect();
     }]);
